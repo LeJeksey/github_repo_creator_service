@@ -13,6 +13,6 @@ func init() {
 
 func StartApp() {
 	mapUrls()
-	
+
 	log.Fatal(router.Run(""))
 }
