@@ -1,0 +1,9 @@
+POST http://localhost/repository
+Content-Type: application/json
+
+{
+  "name": "golang-example",
+  "description": "this is the example of description"
+}
+
+###
