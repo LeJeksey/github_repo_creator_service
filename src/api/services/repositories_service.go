@@ -31,7 +31,7 @@ func (s *reposService) CreateRepo(input repositories.CreateRepoRequest) (*reposi
 	request := github.CreateRepoRequest{
 		Name:        input.Name,
 		Description: input.Description,
-		Private:     false,
+		Private:     true,
 	}
 
 	response, err := github_provider.CreateRepo(config.GetGithubAccessToken(), request)
@@ -80,7 +80,7 @@ func (s *reposService) CreateRepos(requests []repositories.CreateRepoRequest) (*
 	return result, nil
 }
 
-func (s *reposService) handleRepoResults(wg *sync.WaitGroup, input chan *repositories.CreateRepositoresResult, output chan *repositories.CreateReposResponse) {
+func (s *reposService) handleRepoResults(wg *sync.WaitGroup, input <-chan *repositories.CreateRepositoresResult, output chan<- *repositories.CreateReposResponse) {
 	var results repositories.CreateReposResponse
 
 	for result := range input {
@@ -91,7 +91,7 @@ func (s *reposService) handleRepoResults(wg *sync.WaitGroup, input chan *reposit
 	output <- &results
 }
 
-func (s *reposService) createRepoConcurrent(input repositories.CreateRepoRequest, output chan *repositories.CreateRepositoresResult) {
+func (s *reposService) createRepoConcurrent(input repositories.CreateRepoRequest, output chan<- *repositories.CreateRepositoresResult) {
 	res, err := s.CreateRepo(input)
 
 	output <- &repositories.CreateRepositoresResult{Response: res, Error: err}

@@ -33,6 +33,10 @@ func TestCreateRepoInvalidJsonBody(t *testing.T) {
 
 type reposServiceMock struct{}
 
+func (r *reposServiceMock) CreateRepos(input []repositories.CreateRepoRequest) (*repositories.CreateReposResponse, errors.ApiError) {
+	panic("not implemented")
+}
+
 func (r *reposServiceMock) CreateRepo(input repositories.CreateRepoRequest) (*repositories.CreateRepoResponse, errors.ApiError) {
 	return createRepoFunc(input)
 }
